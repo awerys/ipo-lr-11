@@ -53,7 +53,7 @@ html = '''
     </style>
 </head>
 <body>
-    <h1>Новости с Hacker News</h1>
+    <h1>Новости</h1>
     
     <table>
         <tr>
