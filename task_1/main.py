@@ -8,7 +8,7 @@ def parse_hacker_news():
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
-        print("Получаем данные с Hacker News...")
+        print("Получение данных")
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -52,52 +52,37 @@ def parse_hacker_news():
                 }
                 news_list.append(news_item)
         return news_list
-    except requests.RequestException as e:
-        print(f"Ошибка при получении страницы: {e}")
-        return []
-    except Exception as e:
-        print(f"Ошибка при парсинге: {e}")
         return []
 def save_to_json(data, filename='data.json'): 
     try:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"Данные сохранены в файл: {filename}")
-        return True
-    except Exception as e:
-        print(f"Ошибка при сохранении в файл: {e}")
-        return False
+        return 
 def display_news(news_list):
-    if not news_list:
-        print("Нет данных для отображения")
-        return
-    print("\n" + "="*60)
-    print("НОВОСТИ С HACKER NEWS")
-    print("-"*10)
+    print("\n" + " ")
+    print("Новости:")
+    print(" ")
     for item in news_list:
         print(f"{item['id']}. Title: {item['title']}; Comments: {item['comments']};")
 def main():
-    print("Запуск парсера Hacker News...")
+    print("Запуск парсера")
     print("-" * 40)
     news_data = parse_hacker_news()
-    
     if news_data:
         display_news(news_data)
         save_to_json(news_data)
         print("\n" + "-" * 40)
         print(f"Всего новостей: {len(news_data)}")
         print(f"Всего комментариев: {sum(item['comments'] for item in news_data)}")
-        print(f"Сохранено в: data.json")
-        print("\n" + "-" * 40)
-        print("Пример данных из файла JSON:")
+        print(f"Сохранено")
+        print("\n" + " " * 40)
+        print("Пример данных:")
         try:
             with open('data.json', 'r', encoding='utf-8') as f:
                 sample_data = json.load(f)
                 if sample_data:
                     print(f"Первая новость: {sample_data[0]['title'][:50]}...")
-        except:
-            pass
-    else:
-        print("Не удалось получить данные")
+
 if __name__ == "__main__":
     main()
